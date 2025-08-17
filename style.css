@@ -1,4 +1,5 @@
 ul {
     display: grid;
     list-style: none;
+    gap: 20px;
 }
