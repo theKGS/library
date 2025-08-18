@@ -3,3 +3,11 @@ ul {
     list-style: none;
     gap: 20px;
 }
+
+li:nth-child(2n+1) {
+    background-color: rgb(230,230,230);
+}
+
+li:nth-child(2n) {
+    background-color: rgb(200, 200, 200);
+}

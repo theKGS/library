@@ -6,12 +6,26 @@ function Book(author, title, pages, read, id) {
     this.id = id;
 }
 
+const addButton = document.querySelector("input[name='submit']");
+
+addButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    const inputTitle = document.querySelector("input[name='title']").value;
+    const inputAuthor = document.querySelector("input[name='author']").value;
+    const inputPages = document.querySelector("input[name='pagecount']").value;
+    const inputRead = document.querySelector("input[name='read']").checked;
+
+    addBook(inputTitle, inputAuthor, inputPages, inputRead);
+    updateGrid();
+});
+
+console.log(addButton)
+
 let library = [];
 
 function addBook(title, author, pages, read){
     library.push(new Book(author, title, pages, read, crypto.randomUUID()));
 }
-
 
 // Replace the current HTML items with a set of new items
 function updateGrid() {
@@ -28,17 +42,17 @@ function makeNodes(book) {
     wrapString(newElement, "Page count: ", book.pages);
     wrapString(newElement, "Read? ", book.read);
 
-    const newButton = document.createElement('button');
-    newButton.appendChild(document.createTextNode("DELETE"));
+    const newButtonDelete = document.createElement('button');
+    newButtonDelete.appendChild(document.createTextNode("DELETE"));
 
-    newButton.addEventListener("click", (e) => {
+    newButtonDelete.addEventListener("click", (e) => {
         console.log(`${book.id}`);
         const indx = library.findIndex((e) => e.id = book.id );
         library.splice(indx, 1);
         updateGrid();
     });
 
-    newElement.appendChild(newButton);
+    newElement.appendChild(newButtonDelete);
 
     return newElement;
 }
@@ -60,7 +74,7 @@ function wrapString(element, label, data) {
 }
 
 addBook("Bob Smith", "Goldstein's Gastrointestinal Garden", 253, true);
-addBook("Terry Quizzlepoint", "The Drop", 192, false);
-addBook("Harry Purple", "The Third Squatter", 120, true);
+addBook("Terry Quizpoint", "The Drop", 192, false);
+addBook("Harry-Larry Purple", "The Third Squatter", 120, true);
 
 updateGrid();
