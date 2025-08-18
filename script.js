@@ -6,6 +6,11 @@ function Book(author, title, pages, read, id) {
     this.id = id;
 }
 
+Book.prototype.updateReadStatus = function () {
+    this.read = true;
+    console.log("Read status updated");
+}
+
 const addButton = document.querySelector("input[name='submit']");
 
 addButton.addEventListener("click", (e) => {
@@ -23,7 +28,7 @@ console.log(addButton)
 
 let library = [];
 
-function addBook(title, author, pages, read){
+function addBook(title, author, pages, read) {
     library.push(new Book(author, title, pages, read, crypto.randomUUID()));
 }
 
@@ -34,7 +39,7 @@ function updateGrid() {
     inp.replaceChildren(...children);
 }
 
-// Convert a Book to an element that represents a book
+// Convert a Book to an html-element that represents a book
 function makeNodes(book) {
     const newElement = document.createElement('li');
     wrapString(newElement, "Title: ", book.title);
@@ -46,13 +51,25 @@ function makeNodes(book) {
     newButtonDelete.appendChild(document.createTextNode("DELETE"));
 
     newButtonDelete.addEventListener("click", (e) => {
-        console.log(`${book.id}`);
-        const indx = library.findIndex((e) => e.id = book.id );
+        const indx = library.findIndex((bk) => bk.id == book.id);
+        console.log(indx);
         library.splice(indx, 1);
         updateGrid();
     });
 
     newElement.appendChild(newButtonDelete);
+
+    const newButtonRead = document.createElement('button');
+    newButtonRead.appendChild(document.createTextNode("I have read this"));
+
+    newButtonRead.addEventListener("click", (e) => {
+        const indx = library.findIndex((bk) => bk.id == book.id);
+        console.log(indx);
+        library[indx].updateReadStatus();
+        updateGrid();
+    });
+
+    newElement.appendChild(newButtonRead);
 
     return newElement;
 }
